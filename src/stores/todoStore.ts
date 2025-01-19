@@ -7,7 +7,7 @@ type TodoItem = {
   completed: boolean;
 };
 
-export const todoStore = defineStore('todo', {
+export const useTodoStore = defineStore('todo', {
   state: () => ({
     todos: [] as TodoItem[],
   }),
@@ -25,12 +25,13 @@ export const todoStore = defineStore('todo', {
       });
     },
     deleteTodo(id: number) {
-      this.todos.filter((todo) => todo.id !== id);
+      this.todos = this.todos.filter((todo) => todo.id !== id);
     },
     toggleTodo(id: number) {
       const todo = this.todos.find((todo) => todo.id === id);
       if (todo) {
         todo.completed = !todo.completed;
+        this.todos = [...this.todos];
       }
     },
   },

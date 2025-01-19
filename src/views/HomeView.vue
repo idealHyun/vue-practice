@@ -1,19 +1,34 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useTodoStore } from '@/stores/todoStore.ts';
+import {ref} from 'vue';
+
+const newTodo = ref('');
+const todoStore = useTodoStore();
+
+const addTodo = ()=>{
+  if(newTodo.value.trim()){
+    todoStore.addTodo(newTodo.value)
+    newTodo.value=""
+  }
+}
+</script>
 
 <template>
   <header>
     <h1>ToDo List</h1>
   </header>
-
+  <div>
+    <input v-model="newTodo" placeholder="할 일을 입력해주세요.">
+    <button @click="addTodo"> 추가 </button>
+  </div>
   <div class="todo_list">
     <ul>
-      <li>
+      <li v-for="todo in todoStore.todos" :key="todo.id">
         <div class="todo_item">
-          <span>운동하기</span>
+          <span>{{ todo.title }}</span>
           <div class="todo_item_setting">
-            <button>편집</button>
-            <button>완료</button>
-            <button>삭제</button>
+            <button @click="todoStore.toggleTodo(todo.id)">완료</button>
+            <button @click="todoStore.deleteTodo(todo.id)">삭제</button>
           </div>
         </div>
       </li>
