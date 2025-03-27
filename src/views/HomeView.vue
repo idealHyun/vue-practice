@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTodoStore } from '@/stores/todoStore.ts';
 import {ref} from 'vue';
+import TodoItem from '@/components/TodoItem.vue';
 
 const newTodo = ref('');
 const todoStore = useTodoStore();
@@ -24,13 +25,7 @@ const addTodo = ()=>{
   <div class="todo_list">
     <ul>
       <li v-for="todo in todoStore.todos" :key="todo.id">
-        <div class="todo_item">
-          <span :class="{completed:todo.completed}">{{ todo.title }}</span>
-          <div class="todo_item_setting">
-            <button @click="todoStore.toggleTodo(todo.id)">완료</button>
-            <button @click="todoStore.deleteTodo(todo.id)">삭제</button>
-          </div>
-        </div>
+        <TodoItem :todo="todo"/>
       </li>
     </ul>
   </div>
@@ -62,13 +57,5 @@ header {
   border-radius: 0.2rem;
 }
 
-.todo_list ul li .todo_item {
-  display: flex;
-  gap: 2rem;
-  font-size: 1.5rem;
-}
 
-.todo_list ul li .todo_item .completed{
-  text-decoration: line-through;
-}
 </style>

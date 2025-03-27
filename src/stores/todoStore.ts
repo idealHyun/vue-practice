@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import TodoItem from '@/components/TodoItem.vue';
 
-type TodoItem = {
+export type TodoItem = {
   id: number;
   title: string;
   completed: boolean;
